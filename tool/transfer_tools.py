@@ -38,3 +38,14 @@ def draw_points(points, modes, frame):
         cv2.circle(frame, (point[0], point[1]), 8, (0, 153, 255), -1)
 
     return frame
+
+if __name__ == '__main__':
+    mask = cv2.imread('./debug/mask.jpg', cv2.IMREAD_GRAYSCALE)
+    frame = cv2.imread('./debug/frame.jpg')
+    draw_frame = draw_outline(mask, frame)
+    
+    cv2.imwrite('./debug/outline.jpg', draw_frame)
+
+    # bbox = mask2bbox(mask)
+    # draw_0 = cv2.rectangle(mask, bbox[0], bbox[1], (0, 0, 255))
+    # cv2.imwrite('./debug/rect.png', draw_0)

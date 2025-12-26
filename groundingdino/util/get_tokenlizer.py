@@ -1,7 +1,6 @@
 from transformers import AutoTokenizer, BertModel, BertTokenizer, RobertaModel, RobertaTokenizerFast
 import os
 
-
 def get_tokenlizer(text_encoder_type):
     if not isinstance(text_encoder_type, str):
         # print("text_encoder_type is not a str")
@@ -17,7 +16,7 @@ def get_tokenlizer(text_encoder_type):
             )
     print("final text_encoder_type: {}".format(text_encoder_type))
 
-    tokenizer = AutoTokenizer.from_pretrained(f'ckpt/{text_encoder_type}')
+    tokenizer = AutoTokenizer.from_pretrained(text_encoder_type)
     return tokenizer
 
 

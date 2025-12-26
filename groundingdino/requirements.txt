@@ -1,0 +1,4 @@
+addict
+yapf
+supervision>=0.22.0
+pycocotools

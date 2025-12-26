@@ -12,7 +12,7 @@ from seg_track_anything import draw_mask
 
 
 class SegTracker():
-    def __init__(self, segtracker_args, sam_args, aot_args) -> None:
+    def __init__(self,segtracker_args, sam_args, aot_args) -> None:
         """
          Initialize SAM and AOT.
         """
@@ -242,3 +242,23 @@ class SegTracker():
         self.reset_origin_merged_mask(bc_mask, bc_id)
 
         return refined_merged_mask, annotated_frame
+
+if __name__ == '__main__':
+    from model_args import segtracker_args,sam_args,aot_args
+
+    Seg_Tracker = SegTracker(segtracker_args, sam_args, aot_args)
+    
+    # ------------------ detect test ----------------------
+    
+    origin_frame = cv2.imread('/data2/cym/Seg_Tra_any/Segment-and-Track-Anything/debug/point.png')
+    origin_frame = cv2.cvtColor(origin_frame, cv2.COLOR_BGR2RGB)
+    grounding_caption = "swan.water"
+    box_threshold = 0.25
+    text_threshold = 0.25
+
+    predicted_mask, annotated_frame = Seg_Tracker.detect_and_seg(origin_frame, grounding_caption, box_threshold, text_threshold)
+    masked_frame = draw_mask(annotated_frame, predicted_mask)
+    origin_frame = cv2.cvtColor(origin_frame, cv2.COLOR_RGB2BGR)
+
+    cv2.imwrite('./debug/masked_frame.png', masked_frame)
+    cv2.imwrite('./debug/x.png', annotated_frame)
