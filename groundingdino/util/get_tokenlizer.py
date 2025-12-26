@@ -21,7 +21,11 @@ def get_tokenlizer(text_encoder_type):
 
 
 def get_pretrained_language_model(text_encoder_type):
-    if text_encoder_type == "bert-base-uncased" or (os.path.isdir(text_encoder_type) and os.path.exists(text_encoder_type)):
+    # If text_encoder_type already contains path or is an existing directory, use it directly
+    if os.path.isdir(text_encoder_type) and os.path.exists(text_encoder_type):
+        return BertModel.from_pretrained(text_encoder_type)
+    # If it's just the model name, add ckpt/ prefix
+    if text_encoder_type == "bert-base-uncased":
         return BertModel.from_pretrained(f'ckpt/{text_encoder_type}')
     if text_encoder_type == "roberta-base":
         return RobertaModel.from_pretrained(text_encoder_type)
